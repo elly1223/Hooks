@@ -1,27 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-const useConfirm = (message = '', callback, rejection) => {
-  if (typeof callback !== 'function') {
-    return;
-  }
-  const confirmAction = () => {
-    if (window.confirm(message)) {
-      callback();
-    } else {
-      rejection();
-    }
+const useBeforeLeave = () => {
+  const handle = () => {
+    console.log('leaving');
   };
-  return confirmAction;
+  useEffect(() => {
+    document.addEventListener('mouseleave', handle);
+    return () => document.removeEventListener('mouseleave', handle);
+  }, []);
 };
 
 const App = () => {
-  const deleteWorld = () => console.log('Deleting the world...');
-  const abort = () => console.log('Aborted');
-  const confirmDelete = useConfirm('Are you sure?', deleteWorld, abort);
   return (
     <div className='App'>
-      <button onClick={confirmDelete}>Delete the world</button>
+      <h1>Hello</h1>
     </div>
   );
 };
